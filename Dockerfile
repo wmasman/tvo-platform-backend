@@ -1,7 +1,7 @@
-FROM directus/directus:10.8.3
+FROM directus/directus:latest
 
 USER root
-RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache postgresql-client
 RUN corepack enable
 USER node
 
