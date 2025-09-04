@@ -7,7 +7,7 @@ USER node
 
 WORKDIR /directus
 
-COPY ./schema/package.json ./schema/package-lock.json ./
+COPY ./schema/package.json ./schema/package-lock.json ./schema/
 RUN npm install --prefix ./schema
 
 COPY . .
