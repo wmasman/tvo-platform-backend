@@ -11,3 +11,6 @@ primary_region = "ams"
 [mounts]
   source="directus_uploads"
   destination="/directus/uploads"
+
+[deploy]
+  release_command = "npx directus bootstrap"
