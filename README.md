@@ -47,7 +47,10 @@ This project is configured for deployment to Fly.io with a Neon Postgres databas
     fly volumes create directus_uploads --region ams --size 1
     ```
 
-5.  **Set secrets:**
+5.  **Set up Neon MCP Server (Optional):**
+    *   Follow the instructions in the image to set up the Neon MCP server in your VS Code settings. This will allow you to manage your database directly from your editor.
+
+6.  **Set secrets:**
     *   Replace the placeholder with your Neon connection string.
     ```powershell
     fly secrets set KEY="your-strong-random-key" SECRET="your-strong-random-secret" ADMIN_EMAIL="wmasman@gmail.com" ADMIN_PASSWORD="password" DB_CONNECTION_STRING="your-neon-connection-string"
