@@ -42,7 +42,12 @@ This project is configured for deployment to Fly.io with a Neon Postgres databas
     fly launch --no-deploy
     ```
 
-4.  **Set secrets:**
+4.  **Create a volume:**
+    ```powershell
+    fly volumes create directus_uploads --region ams --size 1
+    ```
+
+5.  **Set secrets:**
     *   Replace the placeholder with your Neon connection string.
     ```powershell
     fly secrets set KEY="your-strong-random-key" SECRET="your-strong-random-secret" ADMIN_EMAIL="wmasman@gmail.com" ADMIN_PASSWORD="password" DB_CONNECTION_STRING="your-neon-connection-string"
