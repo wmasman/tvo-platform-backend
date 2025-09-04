@@ -1,0 +1,18 @@
+{
+  "name": "directus-setup",
+  "version": "1.0.0",
+  "description": "A script to set up the Directus data model.",
+  "main": "apply_schema.js",
+  "type": "commonjs",
+  "scripts": {
+    "schema:apply": "node apply_schema.js",
+    "docker:restart": "docker-compose -f ../docker-compose.yml down && docker-compose -f ../docker-compose.yml up -d"
+  },
+  "dependencies": {
+    "@directus/sdk": "^17.0.0",
+    "axios": "^1.6.0",
+    "directus": "^11.3.5",
+    "js-yaml": "^4.1.0",
+    "yaml": "^2.3.4"
+  }
+}

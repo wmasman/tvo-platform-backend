@@ -1,0 +1,85 @@
+version: 1
+collections:
+  - collection: articles
+    meta:
+      collection: articles
+      icon: article
+      note: To store individual articles.
+      display_template: '{{title}}'
+      hidden: false
+      singleton: false
+    schema:
+      name: articles
+    fields:
+      - field: title
+        type: string
+      - field: publication_date
+        type: timestamp
+  - collection: authors
+    meta:
+      collection: authors
+      icon: person
+      note: For author information.
+      display_template: '{{name}}'
+      hidden: false
+      singleton: false
+    schema:
+      name: authors
+    fields:
+      - field: name
+        type: string
+  - collection: concepts
+    meta:
+      collection: concepts
+      icon: lightbulb
+      note: To store key concepts.
+      display_template: '{{name}}'
+      hidden: false
+      singleton: false
+    schema:
+      name: concepts
+    fields:
+      - field: name
+        type: string
+  - collection: insights
+    meta:
+      collection: insights
+      icon: insights
+      note: The core collection for insights.
+      display_template: '{{title}}'
+      hidden: false
+      singleton: false
+    schema:
+      name: insights
+    fields:
+      - field: title
+        type: string
+      - field: creationDate
+        type: timestamp
+  - collection: comments
+    meta:
+      collection: comments
+      icon: comment
+      note: For user comments.
+      display_template: '{{text}}'
+      hidden: false
+      singleton: false
+    schema:
+      name: comments
+    fields:
+      - field: text
+        type: text
+  - collection: thematic_collections
+    meta:
+      collection: thematic_collections
+      icon: collections
+      note: For curated collections of items.
+      display_template: '{{title}}'
+      hidden: false
+      singleton: false
+    schema:
+      name: thematic_collections
+    fields:
+      - field: title
+        type: string
+relations: []

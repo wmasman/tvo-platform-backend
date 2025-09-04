@@ -1,0 +1,16 @@
+services:
+  directus:
+    image: directus/directus:10.8.3
+    ports:
+      - 8055:8055
+    volumes:
+      - ./database:/directus/database
+      - ./uploads:/directus/uploads
+      - ./schema/migrations:/directus/migrations
+    environment:
+      KEY: "${KEY}"
+      SECRET: "${SECRET}"
+      DB_CLIENT: "pg"
+      DB_CONNECTION_STRING: "${DB_CONNECTION_STRING}"
+      ADMIN_EMAIL: "${ADMIN_EMAIL}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
