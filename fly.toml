@@ -1,16 +1,32 @@
-app = "directus-poc"
-primary_region = "ams"
+# fly.toml app configuration file generated for directus-poc on 2025-09-04T20:03:54+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'directus-poc'
+primary_region = 'ams'
+
+[build]
+
+[deploy]
+  release_command = 'npx directus bootstrap'
+
+[[mounts]]
+  source = 'directus_uploads'
+  destination = '/directus/uploads'
 
 [http_service]
   internal_port = 8055
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
 
-[mounts]
-  source="directus_uploads"
-  destination="/directus/uploads"
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
 
-[deploy]
-  release_command = "npx directus bootstrap"
+[env]
+  HOST = "0.0.0.0"
+  PORT = "8055"
