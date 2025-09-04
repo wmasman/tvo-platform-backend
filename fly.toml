@@ -1,9 +1,6 @@
 app = "directus-poc"
 primary_region = "ams"
 
-[build]
-  dockerfile = "Dockerfile"
-
 [http_service]
   internal_port = 8055
   force_https = true
