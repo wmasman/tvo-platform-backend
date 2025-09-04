@@ -1,0 +1,50 @@
+# Railway-optimized docker-compose.yml
+# This version uses Railway's managed PostgreSQL instead of a local database
+
+version: '3.8'
+
+services:
+  directus:
+    image: directus/directus:10.8.3
+    ports:
+      - "${PORT:-8055}:8055"
+    volumes:
+      - directus_uploads:/directus/uploads
+      - ./extensions:/directus/extensions
+    environment:
+      # Railway provides these automatically when you connect PostgreSQL
+      DB_CLIENT: pg
+      DB_HOST: ${PGHOST}
+      DB_PORT: ${PGPORT}
+      DB_DATABASE: ${PGDATABASE}
+      DB_USER: ${PGUSER}
+      DB_PASSWORD: ${PGPASSWORD}
+      
+      # Set these in Railway dashboard
+      KEY: ${KEY}
+      SECRET: ${SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      
+      # Railway-specific configurations
+      PORT: ${PORT:-8055}
+      PUBLIC_URL: https://${RAILWAY_PUBLIC_DOMAIN}
+      
+      # File storage configuration
+      STORAGE_LOCATIONS: local
+      STORAGE_LOCAL_ROOT: /directus/uploads
+      
+      # Performance settings
+      CACHE_ENABLED: true
+      CACHE_AUTO_PURGE: true
+      
+      # Security settings
+      CORS_ENABLED: true
+      CORS_ORIGIN: true
+      
+      # Optional: Telemetry (set to false for privacy)
+      TELEMETRY: false
+
+volumes:
+  directus_uploads:
+    driver: local

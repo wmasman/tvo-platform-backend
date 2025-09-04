@@ -14,7 +14,7 @@ npm run schema:apply
 
 This script will automatically create, update, or delete collections and fields to match the schema defined in the YAML file.
 
-For more detailed information, see the `README.md` file in the `schema` directory.
+For more detailed information, see the `README.md` file in the `schema-tool` directory.
 
 ## Fly.io and Neon Postgres Deployment
 

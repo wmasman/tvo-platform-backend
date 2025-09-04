@@ -7,10 +7,6 @@ USER node
 
 WORKDIR /directus
 
-COPY ./schema/package.json ./schema/package-lock.json ./schema/
-RUN chown -R node:node /directus
-RUN npm install --prefix ./schema
-
 COPY . .
 
 CMD ["npx", "directus", "start"]
