@@ -56,20 +56,8 @@ This project is configured for deployment to Fly.io with a Neon Postgres databas
     fly secrets set KEY="your-strong-random-key" SECRET="your-strong-random-secret" ADMIN_EMAIL="wmasman@gmail.com" ADMIN_PASSWORD="password" DB_CONNECTION_STRING="your-neon-connection-string"
     ```
 
-5.  **Deploy:**
+7.  **Deploy:**
     ```powershell
     fly deploy
     ```
 
-## Kubernetes Deployment
-
-This project can also be deployed to a Kubernetes cluster. The manifest files are located in the `k8s` directory.
-
-To deploy, run the following commands:
-
-```powershell
-kubectl apply -f directus/k8s/secrets.yaml
-kubectl apply -f directus/k8s/deployment.yaml
-kubectl apply -f directus/k8s/service.yaml
-kubectl apply -f directus/k8s/ingress.yaml
-```
