@@ -1,4 +1,4 @@
-FROM directus/directus:latest
+FROM directus/directus:10.8.3
 
 USER root
 RUN apk add --no-cache postgresql-client
