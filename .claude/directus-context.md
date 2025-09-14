@@ -1,62 +1,142 @@
 # Directus CMS Workspace Context
 
 ## Project Overview
-Proof-of-concept headless CMS using Directus for future editorial content creation in the TVO platform.
+Professional headless CMS using Directus with comprehensive development workflow for the TVO platform.
 
-## Directory Structure
+## Git Workflow (Updated)
+```
+develop  ← Active development branch (current)
+staging  ← Pre-production testing
+master   ← Production deployments
+```
+
+## Directory Structure (Enhanced)
 ```
 directus/
-├── schema-tool/           # Automated schema management
-│   ├── apply_schema.js   # Schema application script
-│   └── package.json      # npm run schema:apply
-├── documentation/        # Setup and deployment docs
-├── docker-compose.yml    # Local development
-├── fly.toml             # Fly.io deployment config
-└── README.md            # Main documentation
+├── .claude/                    # Claude Code context
+├── schema-tool/               # Enhanced development tools
+│   ├── apply_schema.js       # Schema application script
+│   └── package.json          # Comprehensive npm scripts
+├── documentation/            # Complete development docs
+│   ├── development-workflow-plan.md  # Epic-based implementation
+│   └── deployment.md         # Deployment procedures
+├── docker-compose.yml        # Full PostgreSQL + Directus stack
+├── .env.local               # Local development config
+├── .env.example             # Environment template
+├── fly.toml                 # Fly.io production deployment
+├── DEVELOPMENT.md           # Developer quick-start guide
+└── README.md                # Project overview
 ```
 
-## Key Commands
+## Development Commands (Enhanced)
+
+### Environment Management
+```bash
+cd schema-tool
+
+# Start full development stack (PostgreSQL + Directus)
+npm run dev:start
+
+# Stop all services
+npm run dev:stop
+
+# Restart services (quick refresh)
+npm run dev:restart
+
+# Reset everything (delete volumes, fresh start)
+npm run dev:reset
+
+# Check service status
+npm run status
+```
+
+### Monitoring & Debugging
+```bash
+# View all logs (real-time)
+npm run dev:logs
+
+# View Directus logs only
+npm run dev:logs:directus
+
+# View PostgreSQL logs only
+npm run dev:logs:postgres
+
+# Check if services are healthy
+npm run health
+
+# Access Directus shell
+npm run dev:shell
+
+# Access PostgreSQL database
+npm run dev:db
+```
 
 ### Schema Management
 ```bash
-cd schema-tool
-npm run schema:apply     # Apply schema from YAML
-npm run docker:restart   # Restart local Directus
+# Apply schema changes to local instance
+npm run schema:apply
+
+# Validate schema without applying
+npm run schema:validate
 ```
 
-### Local Development
-```bash
-docker-compose up -d     # Start Directus locally
-docker-compose down      # Stop Directus
-```
+## Local Development Architecture
+- **PostgreSQL** (port 5433): Local development database with persistent volumes
+- **Directus** (port 8055): CMS and API server with health checks
+- **Network**: Isolated docker network for service communication
+- **Volumes**: Persistent database storage and file uploads
 
-### Deployment
-```bash
-fly deploy              # Deploy to Fly.io
-fly secrets set KEY="..." SECRET="..." # Set environment variables
-```
+## Environment Configuration
+- **`.env.local`**: Actual development settings (git-ignored)
+- **`.env.example`**: Template with placeholder values (tracked)
+- **Docker**: Uses `.env.local` for local development
+- **Production**: Uses Fly.io secrets for cloud deployment
 
-## Configuration Files
-- **Schema**: `schema/migrations/schema_fixed.yml` - Single source of truth
-- **Docker**: `docker-compose.yml` - Local development environment
-- **Deploy**: `fly.toml` - Production deployment configuration
+## Development Workflow Implementation Status
 
-## Technology Stack
-- **CMS**: Directus 11.3.5
-- **Database**: PostgreSQL (Neon for production, local for dev)
-- **Deployment**: Fly.io
-- **Schema Management**: Custom Node.js tool with Directus SDK
+### ✅ Epic 1: Repository Migration & Git Workflow
+- Dedicated repository: `https://github.com/wmasman/tvo-platform-backend`
+- Git branches: develop/staging/master with remote tracking
+- Documentation: Complete epic-based implementation plan
+
+### 🔄 Epic 2: Local Development Environment (In Progress)
+- Enhanced Docker Compose with PostgreSQL + Directus
+- Comprehensive development scripts and commands
+- Environment configuration management
+- Developer documentation and quick-start guide
+
+### 📋 Epic 3: Schema Management & Version Control (Planned)
+- YAML schema versioning with validation
+- Multi-environment schema synchronization
+- Automated backup and rollback procedures
+
+### 📋 Epic 4: Automated Deployment Pipeline (Planned)
+- GitHub Actions for develop → staging → production
+- Environment-specific secret management
+- Zero-downtime deployment strategies
+
+## TaskWarrior Integration
+- **Project**: `tvoo.directus`
+- **Current Task**: Epic 2 (ID: 225) - Local Development Environment
+- **Priority**: High - Foundation for all future development
+
+## Quick Start (New Developer Setup)
+1. `git clone https://github.com/wmasman/tvo-platform-backend.git`
+2. `git checkout develop`
+3. `cp .env.example .env.local` (edit with your settings)
+4. `cd schema-tool && npm run dev:start`
+5. Open http://localhost:8055
 
 ## Integration Strategy
-Future integration with TVO backend:
-1. **Content Creation**: Authors use Directus interface
-2. **Content Processing**: New articles flow through TVO pipeline
-3. **Knowledge Network**: CMS content contributes to concept clusters
-4. **Unified Frontend**: Both PDF and CMS content in same interface
+Hybrid content system: `CMS Content Creation → Processing Pipeline → Knowledge Network → Frontend Display`
 
-## Development Status
-- ✅ Basic Directus setup working
-- ✅ Automated schema management
-- ✅ Fly.io deployment pipeline
-- 🟡 Integration with TVO backend pending
-- 🟠 Content workflow definition needed
+1. **Legacy Content**: PDFs processed through existing pipeline
+2. **New Content**: CMS-authored articles enhanced with AI processing  
+3. **Unified Knowledge**: Both sources contribute to concept clusters
+4. **Enhanced Discovery**: AI connects all content types in frontend
+
+## Port Configuration
+| Service    | Local Port | Purpose |
+|------------|------------|---------|
+| Directus   | 8055       | Admin panel & API |
+| PostgreSQL | 5433       | Database access |

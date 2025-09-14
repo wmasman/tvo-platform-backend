@@ -1,16 +1,59 @@
 services:
-  directus:
-    image: directus/directus:10.8.3
-    ports:
-      - 8055:8055
+  # PostgreSQL Database for Local Development
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: directus_local
+      POSTGRES_USER: directus
+      POSTGRES_PASSWORD: directus_dev_password
     volumes:
-      - ./database:/directus/database
+      - directus_db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U directus -d directus_local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Directus CMS
+  directus:
+    image: directus/directus:latest
+    restart: unless-stopped
+    ports:
+      - "8055:8055"
+    volumes:
       - ./uploads:/directus/uploads
-      - ./schema/migrations:/directus/migrations
+      - ./schema-tool:/directus/schema-tool
     environment:
       KEY: "${KEY}"
       SECRET: "${SECRET}"
       DB_CLIENT: "pg"
-      DB_CONNECTION_STRING: "${DB_CONNECTION_STRING}"
+      DB_HOST: "postgres"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus_local"
+      DB_USER: "directus"
+      DB_PASSWORD: "directus_dev_password"
       ADMIN_EMAIL: "${ADMIN_EMAIL}"
       ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
+      # Development settings
+      LOG_LEVEL: "debug"
+      CACHE_ENABLED: "false"
+      RATE_LIMITER_ENABLED: "false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8055/server/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  directus_db:
+    driver: local
+
+networks:
+  default:
+    name: directus-dev-network

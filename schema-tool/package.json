@@ -5,8 +5,19 @@
   "main": "apply_schema.js",
   "type": "commonjs",
   "scripts": {
+    "dev:start": "docker-compose -f ../docker-compose.yml --env-file ../.env.local up -d",
+    "dev:stop": "docker-compose -f ../docker-compose.yml down",
+    "dev:restart": "npm run dev:stop && npm run dev:start",
+    "dev:logs": "docker-compose -f ../docker-compose.yml logs -f",
+    "dev:logs:directus": "docker-compose -f ../docker-compose.yml logs -f directus",
+    "dev:logs:postgres": "docker-compose -f ../docker-compose.yml logs -f postgres",
+    "dev:reset": "docker-compose -f ../docker-compose.yml down -v && npm run dev:start",
+    "dev:shell": "docker-compose -f ../docker-compose.yml exec directus sh",
+    "dev:db": "docker-compose -f ../docker-compose.yml exec postgres psql -U directus -d directus_local",
     "schema:apply": "node apply_schema.js",
-    "docker:restart": "docker-compose -f ../docker-compose.yml down && docker-compose -f ../docker-compose.yml up -d"
+    "schema:validate": "node apply_schema.js --validate-only",
+    "health": "curl -f http://localhost:8055/server/health || echo 'Directus not running'",
+    "status": "docker-compose -f ../docker-compose.yml ps"
   },
   "dependencies": {
     "@directus/sdk": "^17.0.0",
