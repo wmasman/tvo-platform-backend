@@ -17,8 +17,10 @@ Professional headless CMS using Directus with development workflow optimized for
    ```
 
 3. **Access Directus**
-   - Admin Panel: http://localhost:8055
-   - API: http://localhost:8055/graphql
+   - **Local Admin**: http://localhost:8055
+   - **Local API**: http://localhost:8055/graphql
+   - **Production Admin**: https://directus-poc.fly.dev/admin
+   - **Production API**: https://directus-poc.fly.dev/graphql
 
 ## Development Workflow
 
@@ -56,16 +58,14 @@ npm run dev:db         # Connect to PostgreSQL
    npm run schema:apply
    ```
 
-3. **Deploy to Environments** (Manual, Safe)
+3. **Deploy to Production** (Automated)
    ```bash
-   # Staging
-   fly deploy --config fly.staging.toml
-   npm run schema:apply:staging
-
-   # Production  
-   git checkout main && git merge develop
-   fly deploy
-   npm run schema:apply:production
+   # Merge to master triggers GitHub Action deployment
+   git checkout master && git merge develop
+   git push origin master
+   
+   # Schema applied manually in production admin interface
+   # Visit: https://directus-poc.fly.dev/admin
    ```
 
 4. **Rollback if Needed**

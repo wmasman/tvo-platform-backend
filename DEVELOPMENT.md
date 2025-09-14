@@ -16,9 +16,12 @@
    ```
 
 3. **Access Directus**
-   - **Admin Panel**: http://localhost:8055
-   - **API**: http://localhost:8055/graphql
-   - **Health Check**: http://localhost:8055/server/health
+   - **Local Admin**: http://localhost:8055
+   - **Local API**: http://localhost:8055/graphql  
+   - **Local Health**: http://localhost:8055/server/health
+   - **Production Admin**: https://directus-poc.fly.dev/admin
+   - **Production API**: https://directus-poc.fly.dev/graphql
+   - **Production Health**: https://directus-poc.fly.dev/server/health
 
 ## Development Commands
 
@@ -134,7 +137,13 @@ npm run schema:validate
 ### Git Workflow
 - **develop**: Active development branch
 - **staging**: Pre-production testing
-- **master**: Production deployments
+- **master**: Production deployments (✅ **ACTIVE** - auto-deploys to Fly.io)
+
+### Production Status
+- **✅ DEPLOYED**: September 14, 2025
+- **URL**: https://directus-poc.fly.dev
+- **Status**: Active with enhanced development setup
+- **Deployment**: Automatic via GitHub Actions on master push
 
 ## Port Configuration
 
