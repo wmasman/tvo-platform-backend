@@ -61,14 +61,44 @@ npm run dev:shell
 npm run dev:db
 ```
 
-### Schema Management
+### Schema Management (Solo Developer Approach)
 ```bash
 # Apply schema changes to local instance
 npm run schema:apply
 
-# Validate schema without applying
+# Validate schema without applying (future)
 npm run schema:validate
 ```
+
+### Schema Development Workflow
+**Git-based versioning with manual deployment (safe for small teams)**
+
+1. **Development Cycle**
+   ```bash
+   # Make schema changes in YAML files
+   git add . && git commit -m "feat: add new content type"
+   npm run schema:apply  # Apply to local
+   ```
+
+2. **Environment Promotion** 
+   ```bash
+   # Manual deployment to staging/production
+   # (Prevents accidental breaking changes)
+   git push origin develop
+   # Deploy manually when ready
+   ```
+
+3. **Rollback Strategy**
+   ```bash
+   git revert HEAD           # Revert schema change
+   npm run schema:apply      # Apply reverted schema
+   ```
+
+**Why Manual Over Automated:**
+- ✅ Solo developer control
+- ✅ Prevents accidental production changes  
+- ✅ Simple to understand and debug
+- ✅ Git history = complete audit trail
 
 ## Architecture
 

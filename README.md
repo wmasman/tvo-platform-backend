@@ -1,20 +1,84 @@
-# Directus Proof of Concept
+# Directus CMS Platform
 
-This directory contains a proof-of-concept for a new application backend using Directus.
+Professional headless CMS using Directus with development workflow optimized for solo developers and small teams.
 
-## Automated Schema Management
+## Quick Start
 
-A key feature of this proof-of-concept is the automated schema management system. The schema for the Directus instance is defined in the `schema/migrations/schema_fixed.yml` file. This file is the single source of truth for the database schema.
+1. **Setup Environment**
+   ```bash
+   cp .env.example .env.local
+   # Edit .env.local with your settings
+   ```
 
-To apply the schema, navigate to the `schema` directory and run the following command:
+2. **Start Development**
+   ```bash
+   cd schema-tool
+   npm run dev:start
+   ```
 
-```powershell
-npm run schema:apply
+3. **Access Directus**
+   - Admin Panel: http://localhost:8055
+   - API: http://localhost:8055/graphql
+
+## Development Workflow
+
+### Local Development
+```bash
+cd schema-tool
+
+# Environment management
+npm run dev:start      # Start PostgreSQL + Directus
+npm run dev:stop       # Stop all services
+npm run dev:restart    # Quick restart
+npm run dev:reset      # Fresh start (deletes data)
+
+# Monitoring
+npm run status         # Check service status
+npm run health         # Verify health endpoints
+npm run dev:logs       # View all logs
+
+# Database access
+npm run dev:db         # Connect to PostgreSQL
 ```
 
-This script will automatically create, update, or delete collections and fields to match the schema defined in the YAML file.
+### Schema Management (Solo Developer Workflow)
 
-For more detailed information, see the `README.md` file in the `schema-tool` directory.
+**Simple, git-based schema versioning:**
+
+1. **Make Schema Changes**
+   ```bash
+   # Edit schema files in schema-tool/
+   git add . && git commit -m "feat: add user profiles schema"
+   ```
+
+2. **Apply to Local Environment**
+   ```bash
+   npm run schema:apply
+   ```
+
+3. **Deploy to Environments** (Manual, Safe)
+   ```bash
+   # Staging
+   fly deploy --config fly.staging.toml
+   npm run schema:apply:staging
+
+   # Production  
+   git checkout main && git merge develop
+   fly deploy
+   npm run schema:apply:production
+   ```
+
+4. **Rollback if Needed**
+   ```bash
+   git revert HEAD
+   npm run schema:apply  # Revert to previous schema
+   ```
+
+**Key Principles:**
+- Schema is version controlled in git
+- Manual deployment = safe for small teams
+- Git history = complete audit trail
+- Simple commands, no complex tooling
 
 ## Fly.io and Neon Postgres Deployment
 

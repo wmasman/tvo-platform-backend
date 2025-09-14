@@ -71,13 +71,21 @@ npm run dev:shell
 npm run dev:db
 ```
 
-### Schema Management
+### Schema Management (Solo Developer Workflow)
 ```bash
 # Apply schema changes to local instance
 npm run schema:apply
 
-# Validate schema without applying
-npm run schema:validate
+# Git-based schema versioning
+git add . && git commit -m "feat: add content type"
+npm run schema:apply  # Apply locally
+
+# Manual deployment (safe approach)
+git push origin develop
+# Deploy to staging/production manually when ready
+
+# Rollback if needed
+git revert HEAD && npm run schema:apply
 ```
 
 ## Local Development Architecture
@@ -105,10 +113,11 @@ npm run schema:validate
 - Environment configuration management
 - Developer documentation and quick-start guide
 
-### 📋 Epic 3: Schema Management & Version Control (Planned)
-- YAML schema versioning with validation
-- Multi-environment schema synchronization
-- Automated backup and rollback procedures
+### ✅ Epic 3: Schema Management (Solo Developer Approach)
+- **IMPLEMENTED**: Git-based YAML schema versioning
+- **IMPLEMENTED**: Manual deployment workflow (safe for small teams)
+- **IMPLEMENTED**: Simple rollback via git revert
+- **SKIPPED**: Complex automation (over-engineered for MVP/solo dev)
 
 ### 📋 Epic 4: Automated Deployment Pipeline (Planned)
 - GitHub Actions for develop → staging → production
