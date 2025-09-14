@@ -9,7 +9,7 @@ primary_region = 'ams'
 [build]
 
 [deploy]
-  release_command = 'npx directus database migrate latest'
+  release_command = 'npx directus database migrate:up'
 
 [[mounts]]
   source = 'directus_uploads'
