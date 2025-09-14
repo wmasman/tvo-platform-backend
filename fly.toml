@@ -8,8 +8,9 @@ primary_region = 'ams'
 
 [build]
 
-[deploy]
-  release_command = 'npx directus database migrate:up'
+# [deploy]
+  # release_command = 'npx directus database migrate:up'
+  # Disabled: Fresh deployment doesn't need migrations
 
 [[mounts]]
   source = 'directus_uploads'
