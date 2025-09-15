@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: directus
       POSTGRES_PASSWORD: directus_dev_password
     volumes:
-      - directus_db:/var/lib/postgresql/data
+      - tvo_backend_db:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     healthcheck:
@@ -51,9 +51,9 @@ services:
       retries: 3
 
 volumes:
-  directus_db:
+  tvo_backend_db:
     driver: local
 
 networks:
   default:
-    name: directus-dev-network
+    name: tvo-backend-network

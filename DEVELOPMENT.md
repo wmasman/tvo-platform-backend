@@ -19,9 +19,9 @@
    - **Local Admin**: http://localhost:8055
    - **Local API**: http://localhost:8055/graphql  
    - **Local Health**: http://localhost:8055/server/health
-   - **Production Admin**: https://directus-poc.fly.dev/admin
-   - **Production API**: https://directus-poc.fly.dev/graphql
-   - **Production Health**: https://directus-poc.fly.dev/server/health
+   - **Production Admin**: https://tvo-backend.fly.dev/admin
+   - **Production API**: https://tvo-backend.fly.dev/graphql
+   - **Production Health**: https://tvo-backend.fly.dev/server/health
 
 ## Development Commands
 
@@ -141,7 +141,7 @@ npm run schema:validate
 
 ### Production Status
 - **✅ DEPLOYED**: September 14, 2025
-- **URL**: https://directus-poc.fly.dev
+- **URL**: https://tvo-backend.fly.dev
 - **Status**: Active with enhanced development setup
 - **Deployment**: Automatic via GitHub Actions on master push
 

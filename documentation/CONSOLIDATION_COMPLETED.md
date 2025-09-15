@@ -39,8 +39,8 @@
 ## Current System Status
 
 ### **✅ Cloud Instance**
-- **URL**: https://directus-poc.fly.dev
-- **Admin**: https://directus-poc.fly.dev/admin
+- **URL**: https://tvo-backend.fly.dev
+- **Admin**: https://tvo-backend.fly.dev/admin
 - **Health**: ✅ {"status":"ok"}
 - **Version**: Directus 10.8.3 (54 versions behind, but stable)
 

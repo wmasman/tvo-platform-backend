@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for directus-poc on 2025-09-04T20:03:54+02:00
+# fly.toml app configuration file generated for tvo-backend on 2025-09-04T20:03:54+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'directus-poc'
+app = 'tvo-backend'
 primary_region = 'ams'
 
 [build]
@@ -13,7 +13,7 @@ primary_region = 'ams'
   # Disabled: Fresh deployment doesn't need migrations
 
 [[mounts]]
-  source = 'directus_uploads'
+  source = 'tvo_backend_uploads'
   destination = '/directus/uploads'
 
 [http_service]

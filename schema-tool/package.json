@@ -1,7 +1,7 @@
 {
-  "name": "directus-setup",
+  "name": "tvo-backend-schema-tool",
   "version": "1.0.0",
-  "description": "A script to set up the Directus data model.",
+  "description": "Schema management tool for TVO Backend CMS.",
   "main": "apply_schema.js",
   "type": "commonjs",
   "scripts": {

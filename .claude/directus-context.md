@@ -126,7 +126,7 @@ git revert HEAD && npm run schema:apply
 - **FRESH START DEPLOYMENT**: September 14, 2025
 - Old cloud version replaced with enhanced local setup
 - GitHub Actions deployment pipeline active
-- Production URL: https://directus-poc.fly.dev
+- Production URL: https://tvo-backend.fly.dev
 - **STATUS**: Ready for content development
 
 ## TaskWarrior Integration
@@ -139,12 +139,12 @@ git revert HEAD && npm run schema:apply
 2. `git checkout develop`
 3. `cp .env.example .env.local` (edit with your settings)
 4. `cd schema-tool && npm run dev:start`
-5. **Local**: http://localhost:8055 | **Production**: https://directus-poc.fly.dev
+5. **Local**: http://localhost:8055 | **Production**: https://tvo-backend.fly.dev
 
 ## Production Environment
-- **URL**: https://directus-poc.fly.dev
-- **Admin**: https://directus-poc.fly.dev/admin  
-- **Health**: https://directus-poc.fly.dev/server/health
+- **URL**: https://tvo-backend.fly.dev
+- **Admin**: https://tvo-backend.fly.dev/admin  
+- **Health**: https://tvo-backend.fly.dev/server/health
 - **Status**: ✅ Active with enhanced setup deployed
 - **Last Updated**: September 14, 2025 (Fresh start deployment)
 

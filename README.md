@@ -19,8 +19,8 @@ Professional headless CMS using Directus with development workflow optimized for
 3. **Access Directus**
    - **Local Admin**: http://localhost:8055
    - **Local API**: http://localhost:8055/graphql
-   - **Production Admin**: https://directus-poc.fly.dev/admin
-   - **Production API**: https://directus-poc.fly.dev/graphql
+   - **Production Admin**: https://tvo-backend.fly.dev/admin
+   - **Production API**: https://tvo-backend.fly.dev/graphql
 
 ## Development Workflow
 
@@ -65,7 +65,7 @@ npm run dev:db         # Connect to PostgreSQL
    git push origin master
    
    # Schema applied manually in production admin interface
-   # Visit: https://directus-poc.fly.dev/admin
+   # Visit: https://tvo-backend.fly.dev/admin
    ```
 
 4. **Rollback if Needed**
