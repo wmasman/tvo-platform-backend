@@ -80,9 +80,13 @@ npm run dev:db         # Connect to PostgreSQL
 - Git history = complete audit trail
 - Simple commands, no complex tooling
 
-## Fly.io and Neon Postgres Deployment
+## Deployment Strategy
 
-This project is configured for deployment to Fly.io with a Neon Postgres database.
+### CMS Backend: Fly.io with Neon PostgreSQL
+This project is configured for deployment to Fly.io with a Neon Postgres database for the CMS backend.
+
+### Frontend Integration: Cloudflare Pages
+The frontend deploys to Cloudflare Pages with static export optimization, consuming content from this Directus CMS via API.
 
 ### Prerequisites
 
