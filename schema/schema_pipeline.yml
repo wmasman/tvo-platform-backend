@@ -123,6 +123,24 @@ collections:
           options:
             language: json
 
+      - field: authors
+        type: alias
+        meta:
+          field: authors
+          special:
+            - m2m
+          interface: list-m2m
+          options:
+            template: '{{name}}'
+      - field: references
+        type: alias
+        meta:
+          field: references
+          special:
+            - m2m
+          interface: list-m2m
+          options:
+            template: '{{reference_text}}'
   - collection: authors
     meta:
       collection: authors
@@ -162,6 +180,15 @@ collections:
           field: avatar_url
           interface: input
 
+      - field: articles
+        type: alias
+        meta:
+          field: articles
+          special:
+            - m2m
+          interface: list-m2m
+          options:
+            template: '{{title}}'
   - collection: concepts
     meta:
       collection: concepts
@@ -248,10 +275,17 @@ collections:
           readonly: true
           hidden: true
       - field: article_id
-        type: string
+        type: uuid
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
         meta:
           field: article_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: block_number
         type: integer
         meta:
@@ -422,20 +456,32 @@ collections:
           readonly: true
           hidden: true
       - field: article_id
-        type: string
+        type: uuid
         meta:
           field: article_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: parent_section_id
         type: integer
         meta:
           field: parent_section_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: heading_block_id
         type: integer
         meta:
           field: heading_block_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: section_order
         type: integer
         meta:
@@ -471,16 +517,32 @@ collections:
           interface: input
           readonly: true
           hidden: true
-      - field: article_id
-        type: string
+      - field: articles_id
+        type: uuid
         meta:
-          field: article_id
-          interface: input
-      - field: author_id
+          field: articles_id
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
+          hidden: true
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
+      - field: authors_id
         type: integer
         meta:
-          field: author_id
-          interface: input
+          field: authors_id
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{name}}'
+          hidden: true
+        schema:
+          foreign_key_table: authors
+          foreign_key_column: id
   - collection: article_references
     meta:
       collection: article_references
@@ -533,10 +595,17 @@ collections:
           readonly: true
           hidden: true
       - field: article_id
-        type: string
+        type: uuid
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
         meta:
           field: article_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: type
         type: string
         meta:
@@ -586,10 +655,17 @@ collections:
           readonly: true
           hidden: true
       - field: article_id
-        type: string
+        type: uuid
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
         meta:
           field: article_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: start_sentence_index
         type: integer
         meta:
@@ -637,10 +713,17 @@ collections:
           readonly: true
           hidden: true
       - field: article_id
-        type: string
+        type: uuid
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
         meta:
           field: article_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: structured_analysis_raw
         type: json
         meta:
@@ -691,9 +774,16 @@ collections:
           hidden: true
       - field: concept_id
         type: integer
+        schema:
+          foreign_key_table: concepts
+          foreign_key_column: id
         meta:
           field: concept_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{name_nl}}'
       - field: sense_description_nl
         type: text
         meta:
@@ -918,10 +1008,15 @@ collections:
           field: image_id
           interface: input
       - field: article_id
-        type: string
+        type: uuid
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
         meta:
           field: article_id
-          interface: input
+          interface: select-dropdown-m2o
+          special:
+            - m2o
       - field: image_path
         type: string
         meta:
@@ -966,14 +1061,24 @@ collections:
           interface: input
       - field: text_block_id
         type: integer
+        schema:
+          foreign_key_table: text_blocks
+          foreign_key_column: id
         meta:
           field: text_block_id
-          interface: input
+          interface: select-dropdown-m2o
+          special:
+            - m2o
       - field: caption_block_id
         type: integer
+        schema:
+          foreign_key_table: text_blocks
+          foreign_key_column: id
         meta:
           field: caption_block_id
-          interface: input
+          interface: select-dropdown-m2o
+          special:
+            - m2o
       - field: layout_hint
         type: string
         meta:
@@ -1006,10 +1111,17 @@ collections:
           field: table_id
           interface: input
       - field: article_id
-        type: string
+        type: uuid
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
         meta:
           field: article_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: page_number
         type: integer
         meta:
@@ -1209,9 +1321,14 @@ collections:
           hidden: true
       - field: text_block_id
         type: integer
+        schema:
+          foreign_key_table: text_blocks
+          foreign_key_column: id
         meta:
           field: text_block_id
-          interface: input
+          interface: select-dropdown-m2o
+          special:
+            - m2o
       - field: text
         type: text
         meta:
@@ -1306,19 +1423,40 @@ collections:
           hidden: true
       - field: analysis_id
         type: integer
+        schema:
+          foreign_key_table: concept_analyses
+          foreign_key_column: id
         meta:
           field: analysis_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{id}}'
       - field: concept_id
         type: integer
+        schema:
+          foreign_key_table: concepts
+          foreign_key_column: id
         meta:
           field: concept_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{name_nl}}'
       - field: sense_id
         type: integer
+        schema:
+          foreign_key_table: senses
+          foreign_key_column: id
         meta:
           field: sense_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{definition_nl}}'
       - field: concept_name_in_article_nl
         type: string
         meta:
@@ -1357,9 +1495,16 @@ collections:
           hidden: true
       - field: analysis_id
         type: integer
+        schema:
+          foreign_key_table: concept_analyses
+          foreign_key_column: id
         meta:
           field: analysis_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{id}}'
       - field: sense_index
         type: integer
         meta:
@@ -1372,9 +1517,16 @@ collections:
           interface: input
       - field: strategy_id
         type: integer
+        schema:
+          foreign_key_table: embedding_strategies
+          foreign_key_column: id
         meta:
           field: strategy_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{name}}'
       - field: embedding
         type: json
         meta:
@@ -1410,9 +1562,14 @@ collections:
           interface: input
       - field: analysis_id
         type: integer
+        schema:
+          foreign_key_table: concept_analyses
+          foreign_key_column: id
         meta:
           field: analysis_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
       - field: method
         type: string
         meta:
@@ -1439,9 +1596,14 @@ collections:
           interface: input
       - field: strategy_id
         type: integer
+        schema:
+          foreign_key_table: embedding_strategies
+          foreign_key_column: id
         meta:
           field: strategy_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
       - field: created_at
         type: timestamp
         meta:
@@ -1469,10 +1631,17 @@ collections:
           readonly: true
           hidden: true
       - field: article_id
-        type: string
+        type: uuid
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
         meta:
           field: article_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: block_id
         type: string
         meta:
@@ -1480,9 +1649,16 @@ collections:
           interface: input
       - field: pattern_version_id
         type: integer
+        schema:
+          foreign_key_table: pattern_versions
+          foreign_key_column: id
         meta:
           field: pattern_version_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{version}} - {{patterns.name}}'
       - field: semantic_tag
         type: string
         meta:
@@ -1546,10 +1722,17 @@ collections:
           readonly: true
           hidden: true
       - field: article_id
-        type: string
+        type: uuid
+        schema:
+          foreign_key_table: articles
+          foreign_key_column: id
         meta:
           field: article_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{title}}'
       - field: pattern_name
         type: string
         meta:
@@ -1557,9 +1740,16 @@ collections:
           interface: input
       - field: pattern_version_id
         type: integer
+        schema:
+          foreign_key_table: pattern_versions
+          foreign_key_column: id
         meta:
           field: pattern_version_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{pattern_name}} - v{{version}}'
       - field: error_message
         type: text
         meta:
@@ -1603,14 +1793,28 @@ collections:
           hidden: true
       - field: article_concept_sense_id
         type: integer
+        schema:
+          foreign_key_table: article_concept_senses
+          foreign_key_column: id
         meta:
           field: article_concept_sense_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{id}}'
       - field: segment_db_id
         type: integer
+        schema:
+          foreign_key_table: discourse_segments
+          foreign_key_column: id
         meta:
           field: segment_db_id
-          interface: input
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{id}}'
       - field: text_extract_nl
         type: text
         meta:
@@ -1626,3 +1830,114 @@ collections:
         meta:
           field: end_char_in_segment
           interface: input
+  - collection: sense_cluster_assignments
+    meta:
+      collection: sense_cluster_assignments
+      icon: hub
+      note: 'Assignments of senses to clusters.'
+      display_template: 'Assignment {{assignment_id}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: sense_cluster_assignments
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: run_id
+        type: integer
+        schema:
+          foreign_key_table: sense_clustering_runs
+          foreign_key_column: id
+        meta:
+          field: run_id
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{id}}'
+      - field: sense_index
+        type: integer
+        meta:
+          field: sense_index
+          interface: input
+      - field: cluster_label
+        type: integer
+        meta:
+          field: cluster_label
+          interface: input
+  - collection: generated_insights
+    meta:
+      collection: generated_insights
+      icon: insights
+      note: 'Insights generated from clustered senses.'
+      display_template: '{{cluster_name_output}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: generated_insights
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: cluster_run_id
+        type: integer
+        schema:
+          foreign_key_table: sense_clustering_runs
+          foreign_key_column: id
+        meta:
+          field: cluster_run_id
+          special:
+            - m2o
+          interface: select-dropdown-m2o
+          options:
+            template: '{{run_name}}'
+      - field: cluster_label
+        type: string
+        meta:
+          field: cluster_label
+          interface: input
+      - field: cluster_name_output
+        type: text
+        meta:
+          field: cluster_name_output
+          interface: textarea
+      - field: narrative_output
+        type: text
+        meta:
+          field: narrative_output
+          interface: textarea
+      - field: llm_model_used
+        type: string
+        meta:
+          field: llm_model_used
+          interface: input
+      - field: prompt_name
+        type: string
+        meta:
+          field: prompt_name
+          interface: input
+      - field: prompt_version
+        type: string
+        meta:
+          field: prompt_version
+          interface: input
+      - field: created_at
+        type: timestamp
+        meta:
+          field: created_at
+          interface: datetime
