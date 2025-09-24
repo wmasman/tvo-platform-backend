@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: directus_client
+Version: 0.1.0
+Requires-Python: >=3.10
+Requires-Dist: requests==2.32.3
+Requires-Dist: pyyaml==6.0.2
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: requests_mock; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: isort; extra == "dev"

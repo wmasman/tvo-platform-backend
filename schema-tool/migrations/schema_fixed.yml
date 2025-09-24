@@ -1,0 +1,196 @@
+version: 11
+
+collections:
+  - collection: articles
+    meta:
+      collection: articles
+      icon: feed
+      note: 'Core content articles.'
+      display_template: '{{title}}'
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: null
+      group: null
+      collapse: open
+    schema:
+      schema: public
+      name: articles
+      comment: null
+    fields:
+      - field: id
+        type: string
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: title
+        type: string
+        meta:
+          field: title
+          interface: input
+          required: true
+          width: full
+      - field: publication_date
+        type: timestamp
+        meta:
+          field: publication_date
+          interface: datetime
+          width: half
+      - field: content
+        type: text
+        meta:
+          field: content
+          interface: input-rich-text-md
+      - field: processing_status
+        type: string
+        meta:
+          field: processing_status
+          interface: select-dropdown
+          options:
+            choices:
+              - text: Pending
+                value: pending
+              - text: In Progress
+                value: in_progress
+              - text: Completed
+                value: completed
+              - text: Failed
+                value: failed
+          width: half
+      - field: summary_card
+        type: text
+        meta:
+          field: summary_card
+          interface: textarea
+      - field: summary_detail
+        type: text
+        meta:
+          field: summary_detail
+          interface: textarea
+      - field: small_image_url
+        type: string
+        meta:
+          field: small_image_url
+          interface: input
+      - field: estimated_reading_time_minutes
+        type: integer
+        meta:
+          field: estimated_reading_time_minutes
+          interface: input
+      - field: article_type
+        type: string
+        meta:
+          field: article_type
+          interface: input
+      - field: separated_content
+        type: json
+        meta:
+          field: separated_content
+          interface: input-code
+          options:
+            language: json
+      - field: base_content_flow
+        type: json
+        meta:
+          field: base_content_flow
+          interface: input-code
+          options:
+            language: json
+      - field: content_flow_cache
+        type: json
+        meta:
+          field: content_flow_cache
+          interface: input-code
+          options:
+            language: json
+      - field: article_metadata
+        type: json
+        meta:
+          field: article_metadata
+          interface: input-code
+          options:
+            language: json
+
+  - collection: authors
+    meta:
+      collection: authors
+      icon: group
+      note: 'Content authors.'
+      display_template: '{{name}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: authors
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: name
+        type: string
+        meta:
+          field: name
+          interface: input
+          required: true
+          width: full
+      - field: bio_card
+        type: text
+        meta:
+          field: bio_card
+          interface: textarea
+      - field: avatar_url
+        type: string
+        meta:
+          field: avatar_url
+          interface: input
+
+  - collection: concepts
+    meta:
+      collection: concepts
+      icon: science
+      note: 'Key concepts and their definitions.'
+      display_template: '{{name_nl}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: concepts
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: name_nl
+        type: string
+        meta:
+          field: name_nl
+          interface: input
+          required: true
+      - field: definition_nl
+        type: text
+        meta:
+          field: definition_nl
+          interface: textarea

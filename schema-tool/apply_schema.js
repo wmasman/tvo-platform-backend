@@ -2,11 +2,12 @@ const axios = require('axios');
 const fs = require('fs');
 const yaml = require('js-yaml');
 const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 // --- Configuration ---
 const DIRECTUS_URL = 'http://localhost:8055';
-const ADMIN_EMAIL = 'wmasman@gmail.com';
-const ADMIN_PASSWORD = 'password';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const SCHEMA_PATH = path.join(__dirname, 'migrations', 'schema_fixed.yml');
 
 // --- Axios Instance ---

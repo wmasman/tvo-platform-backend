@@ -1,0 +1,12 @@
+setup.py
+directus_client/__init__.py
+directus_client/client.py
+directus_client/constants.py
+directus_client/errors.py
+directus_client/models.py
+directus_client/nested_query_string.py
+directus_client.egg-info/PKG-INFO
+directus_client.egg-info/SOURCES.txt
+directus_client.egg-info/dependency_links.txt
+directus_client.egg-info/requires.txt
+directus_client.egg-info/top_level.txt
