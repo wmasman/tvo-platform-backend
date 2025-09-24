@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 const yaml = require('js-yaml');
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
 
 // --- Configuration ---
 const DIRECTUS_URL = 'http://localhost:8055';
@@ -44,10 +44,80 @@ async function authenticateWithRetry(retries = 5, delayMs = 5000) {
     throw new Error('Authentication failed after multiple retries.');
 }
 
+async function getAdminRoleId() {
+    try {
+        const response = await api.get('/roles');
+        const adminRole = response.data.data.find(role => role.name === 'Administrator');
+        if (adminRole) {
+            log('Found Administrator role.');
+            return adminRole.id;
+        }
+        throw new Error('Administrator role not found.');
+    } catch (err) {
+        error('Failed to get Administrator role ID.', err.response ? err.response.data : err.message);
+        throw err;
+    }
+}
+
+async function getBuiltInAdminPolicy() {
+    try {
+        // Find the built-in Administrator policy with admin_access: true
+        const policiesResponse = await api.get('/policies');
+        const adminPolicy = policiesResponse.data.data.find(policy =>
+            policy.name === 'Administrator' && policy.admin_access === true
+        );
+
+        if (adminPolicy) {
+            log(`Found built-in Administrator policy with ID: ${adminPolicy.id}`);
+            return adminPolicy.id;
+        }
+
+        throw new Error('Built-in Administrator policy not found.');
+    } catch (err) {
+        error('Failed to get built-in Administrator policy.', err.response ? err.response.data : err.message);
+        throw err;
+    }
+}
+
+async function linkPolicyToCurrentUser(policyId) {
+    try {
+        log(`Linking policy ${policyId} to current user...`);
+
+        // Get current user info
+        const userResponse = await api.get('/users/me');
+        const currentUser = userResponse.data.data;
+        const currentPolicies = currentUser.policies || [];
+
+        if (currentPolicies.some(p => p === policyId || (typeof p === 'object' && p.id === policyId))) {
+            log('Policy already linked to user.');
+            return;
+        }
+
+        // Add policy to current user
+        await api.patch(`/users/${currentUser.id}`, {
+            policies: [...currentPolicies, policyId]
+        });
+
+        log('Policy linked to current user successfully.');
+    } catch (err) {
+        error('Failed to link policy to current user.', err.response ? err.response.data : err.message);
+        // Don't throw - this might not be necessary for admin users
+    }
+}
+
 // --- Main Execution ---
 async function syncSchema() {
+    let adminRoleId;
+    let adminPolicyId;
     try {
         await authenticateWithRetry();
+        adminRoleId = await getAdminRoleId();
+        adminPolicyId = await getBuiltInAdminPolicy();
+
+        // Try to link policy to current user instead of role
+        await linkPolicyToCurrentUser(adminPolicyId);
+
+        await grantPermissions(adminPolicyId, 'directus_permissions');
     } catch (err) {
         error(err.message);
         return;
@@ -84,9 +154,13 @@ async function syncSchema() {
                     schema: collection.schema,
                 });
                 log(`Collection "${collection.collection}" created.`);
+                await grantPermissions(adminPolicyId, collection.collection);
             } catch (err) {
                 error(`Failed to create collection "${collection.collection}".`, err.response ? err.response.data : err.message);
             }
+        } else {
+            // Collection exists, still grant permissions in case they're missing
+            await grantPermissions(adminPolicyId, collection.collection);
         }
 
         // 4. Fields to Create/Delete
@@ -126,6 +200,35 @@ async function syncSchema() {
     }
 
     log('Schema sync process complete.');
+}
+
+async function grantPermissions(policyId, collectionName) {
+    const actions = ['create', 'read', 'update', 'delete'];
+
+    try {
+        log(`Granting permissions for "${collectionName}" to policy...`);
+
+        for (const action of actions) {
+            try {
+                await api.post('/permissions', {
+                    collection: collectionName,
+                    action: action,
+                    permissions: {},
+                    validation: {},
+                    presets: {},
+                    fields: '*',
+                    policy: policyId
+                });
+                log(`Permission "${action}" granted for "${collectionName}".`);
+            } catch (permErr) {
+                error(`Failed to grant "${action}" permission for "${collectionName}".`, permErr.response ? permErr.response.data : permErr.message);
+            }
+        }
+
+        log(`All permissions granted for "${collectionName}".`);
+    } catch (err) {
+        error(`Failed to grant permissions for "${collectionName}".`, err.response ? err.response.data : err.message);
+    }
 }
 
 syncSchema();
