@@ -25,7 +25,8 @@ services:
       - "8055:8055"
     volumes:
       - ./uploads:/directus/uploads
-      - ./schema-tool:/directus/schema-tool
+      - ./scripts:/directus/scripts
+      - ./schema:/directus/schema
     environment:
       KEY: "${KEY}"
       SECRET: "${SECRET}"

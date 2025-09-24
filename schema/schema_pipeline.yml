@@ -1,0 +1,1628 @@
+version: 11
+
+collections:
+  - collection: articles
+    meta:
+      collection: articles
+      icon: feed
+      note: 'Core content articles.'
+      display_template: '{{title}}'
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: null
+      group: null
+      collapse: open
+    schema:
+      schema: public
+      name: articles
+      comment: null
+    fields:
+      - field: id
+        type: string
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: title
+        type: string
+        meta:
+          field: title
+          interface: input
+          required: true
+          width: full
+      - field: publication_date
+        type: timestamp
+        meta:
+          field: publication_date
+          interface: datetime
+          width: half
+      - field: content
+        type: text
+        meta:
+          field: content
+          interface: input-rich-text-md
+      - field: processing_status
+        type: string
+        meta:
+          field: processing_status
+          interface: select-dropdown
+          options:
+            choices:
+              - text: Pending
+                value: pending
+              - text: In Progress
+                value: in_progress
+              - text: Completed
+                value: completed
+              - text: Failed
+                value: failed
+          width: half
+      - field: summary_card
+        type: text
+        meta:
+          field: summary_card
+          interface: textarea
+      - field: summary_detail
+        type: text
+        meta:
+          field: summary_detail
+          interface: textarea
+      - field: small_image_url
+        type: string
+        meta:
+          field: small_image_url
+          interface: input
+      - field: estimated_reading_time_minutes
+        type: integer
+        meta:
+          field: estimated_reading_time_minutes
+          interface: input
+      - field: article_type
+        type: string
+        meta:
+          field: article_type
+          interface: input
+      - field: separated_content
+        type: json
+        meta:
+          field: separated_content
+          interface: input-code
+          options:
+            language: json
+      - field: base_content_flow
+        type: json
+        meta:
+          field: base_content_flow
+          interface: input-code
+          options:
+            language: json
+      - field: content_flow_cache
+        type: json
+        meta:
+          field: content_flow_cache
+          interface: input-code
+          options:
+            language: json
+      - field: article_metadata
+        type: json
+        meta:
+          field: article_metadata
+          interface: input-code
+          options:
+            language: json
+
+  - collection: authors
+    meta:
+      collection: authors
+      icon: group
+      note: 'Content authors.'
+      display_template: '{{name}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: authors
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: name
+        type: string
+        meta:
+          field: name
+          interface: input
+          required: true
+          width: full
+      - field: bio_card
+        type: text
+        meta:
+          field: bio_card
+          interface: textarea
+      - field: avatar_url
+        type: string
+        meta:
+          field: avatar_url
+          interface: input
+
+  - collection: concepts
+    meta:
+      collection: concepts
+      icon: science
+      note: 'Key concepts and their definitions.'
+      display_template: '{{name_nl}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: concepts
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: name_nl
+        type: string
+        meta:
+          field: name_nl
+          interface: input
+          required: true
+      - field: definition_nl
+        type: text
+        meta:
+          field: definition_nl
+          interface: textarea
+  - collection: embedding_strategies
+    meta:
+      collection: embedding_strategies
+      icon: functions
+      note: 'Strategies for embedding content.'
+      display_template: '{{name}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: embedding_strategies
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: name
+        type: string
+        meta:
+          field: name
+          interface: input
+          required: true
+      - field: description
+        type: text
+        meta:
+          field: description
+          interface: textarea
+  - collection: text_blocks
+    meta:
+      collection: text_blocks
+      icon: view_stream
+      note: 'Text blocks extracted from documents.'
+      display_template: 'Block {{block_number}} on page {{page_number}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: text_blocks
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: block_number
+        type: integer
+        meta:
+          field: block_number
+          interface: input
+      - field: page_number
+        type: integer
+        meta:
+          field: page_number
+          interface: input
+      - field: bbox
+        type: json
+        meta:
+          field: bbox
+          interface: input-code
+          options:
+            language: json
+      - field: reading_order
+        type: integer
+        meta:
+          field: reading_order
+          interface: input
+      - field: section_id
+        type: integer
+        meta:
+          field: section_id
+          interface: input
+  - collection: patterns
+    meta:
+      collection: patterns
+      icon: pattern
+      note: 'Rules and patterns for content extraction.'
+      display_template: '{{name}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: patterns
+    fields:
+      - field: name
+        type: string
+        meta:
+          field: name
+          interface: input
+          required: true
+      - field: description
+        type: text
+        meta:
+          field: description
+          interface: textarea
+      - field: pattern_type
+        type: string
+        meta:
+          field: pattern_type
+          interface: input
+      - field: is_base_pattern
+        type: boolean
+        meta:
+          field: is_base_pattern
+          interface: boolean
+      - field: is_required
+        type: boolean
+        meta:
+          field: is_required
+          interface: boolean
+      - field: semantic_tag
+        type: string
+        meta:
+          field: semantic_tag
+          interface: input
+      - field: content_type
+        type: string
+        meta:
+          field: content_type
+          interface: input
+      - field: action
+        type: string
+        meta:
+          field: action
+          interface: input
+      - field: font_names
+        type: json
+        meta:
+          field: font_names
+          interface: input-code
+          options:
+            language: json
+      - field: min_font_size
+        type: float
+        meta:
+          field: min_font_size
+          interface: input
+      - field: max_font_size
+        type: float
+        meta:
+          field: max_font_size
+          interface: input
+      - field: is_bold
+        type: boolean
+        meta:
+          field: is_bold
+          interface: boolean
+      - field: is_italic
+        type: boolean
+        meta:
+          field: is_italic
+          interface: boolean
+      - field: page_area
+        type: json
+        meta:
+          field: page_area
+          interface: input-code
+          options:
+            language: json
+      - field: text_regex
+        type: string
+        meta:
+          field: text_regex
+          interface: input
+      - field: priority
+        type: integer
+        meta:
+          field: priority
+          interface: input
+      - field: extraction_method
+        type: string
+        meta:
+          field: extraction_method
+          interface: input
+      - field: target_level
+        type: string
+        meta:
+          field: target_level
+          interface: input
+      - field: table_config
+        type: json
+        meta:
+          field: table_config
+          interface: input-code
+          options:
+            language: json
+      - field: pattern_metadata
+        type: json
+        meta:
+          field: pattern_metadata
+          interface: input-code
+          options:
+            language: json
+  - collection: document_sections
+    meta:
+      collection: document_sections
+      icon: folder_special
+      note: 'Sections within a document.'
+      display_template: '{{title}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: document_sections
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: parent_section_id
+        type: integer
+        meta:
+          field: parent_section_id
+          interface: input
+      - field: heading_block_id
+        type: integer
+        meta:
+          field: heading_block_id
+          interface: input
+      - field: section_order
+        type: integer
+        meta:
+          field: section_order
+          interface: input
+      - field: level
+        type: integer
+        meta:
+          field: level
+          interface: input
+      - field: title
+        type: string
+        meta:
+          field: title
+          interface: input
+  - collection: article_authors
+    meta:
+      collection: article_authors
+      icon: link
+      note: 'Junction table between articles and authors.'
+      hidden: true
+      singleton: false
+    schema:
+      schema: public
+      name: article_authors
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: author_id
+        type: integer
+        meta:
+          field: author_id
+          interface: input
+  - collection: article_references
+    meta:
+      collection: article_references
+      icon: link
+      note: 'Junction table between articles and references.'
+      hidden: true
+      singleton: false
+    schema:
+      schema: public
+      name: article_references
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: reference_id
+        type: integer
+        meta:
+          field: reference_id
+          interface: input
+  - collection: biographies
+    meta:
+      collection: biographies
+      icon: badge
+      note: 'Biographical information extracted from articles.'
+      display_template: '{{text}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: biographies
+    fields:
+      - field: id
+        type: string
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: type
+        type: string
+        meta:
+          field: type
+          interface: input
+      - field: text
+        type: text
+        meta:
+          field: text
+          interface: textarea
+      - field: start_char
+        type: integer
+        meta:
+          field: start_char
+          interface: input
+      - field: end_char
+        type: integer
+        meta:
+          field: end_char
+          interface: input
+      - field: segment_ids
+        type: json
+        meta:
+          field: segment_ids
+          interface: input-code
+          options:
+            language: json
+  - collection: discourse_segments
+    meta:
+      collection: discourse_segments
+      icon: chat_bubble
+      note: 'Segments of discourse from articles.'
+      display_template: 'Segment {{segment_id}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: discourse_segments
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: start_sentence_index
+        type: integer
+        meta:
+          field: start_sentence_index
+          interface: input
+      - field: end_sentence_index
+        type: integer
+        meta:
+          field: end_sentence_index
+          interface: input
+      - field: model_used
+        type: string
+        meta:
+          field: model_used
+          interface: input
+      - field: prompt_hash
+        type: string
+        meta:
+          field: prompt_hash
+          interface: input
+      - field: created_at
+        type: timestamp
+        meta:
+          field: created_at
+          interface: datetime
+  - collection: concept_analyses
+    meta:
+      collection: concept_analyses
+      icon: analytics
+      note: 'Analyses of concepts within articles.'
+      display_template: 'Analysis {{analysis_id}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: concept_analyses
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: structured_analysis_raw
+        type: json
+        meta:
+          field: structured_analysis_raw
+          interface: input-code
+          options:
+            language: json
+      - field: llm_model_used_initial
+        type: string
+        meta:
+          field: llm_model_used_initial
+          interface: input
+      - field: prompt_hash_initial
+        type: string
+        meta:
+          field: prompt_hash_initial
+          interface: input
+      - field: template_path_initial
+        type: string
+        meta:
+          field: template_path_initial
+          interface: input
+      - field: analysis_timestamp
+        type: timestamp
+        meta:
+          field: analysis_timestamp
+          interface: datetime
+  - collection: senses
+    meta:
+      collection: senses
+      icon: explore
+      note: 'Different senses or meanings of concepts.'
+      display_template: '{{sense_description_nl}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: senses
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: concept_id
+        type: integer
+        meta:
+          field: concept_id
+          interface: input
+      - field: sense_description_nl
+        type: text
+        meta:
+          field: sense_description_nl
+          interface: textarea
+  - collection: processing_logs
+    meta:
+      collection: processing_logs
+      icon: list_alt
+      note: 'Logs of processing operations.'
+      display_template: '{{operation}} - {{status}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: processing_logs
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: timestamp
+        type: timestamp
+        meta:
+          field: timestamp
+          interface: datetime
+      - field: operation
+        type: string
+        meta:
+          field: operation
+          interface: input
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: status
+        type: string
+        meta:
+          field: status
+          interface: input
+      - field: message
+        type: text
+        meta:
+          field: message
+          interface: textarea
+  - collection: sentences
+    meta:
+      collection: sentences
+      icon: format_align_left
+      note: 'Sentences extracted from articles.'
+      display_template: '{{text}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: sentences
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: index
+        type: integer
+        meta:
+          field: index
+          interface: input
+      - field: text
+        type: text
+        meta:
+          field: text
+          interface: textarea
+      - field: start_char
+        type: integer
+        meta:
+          field: start_char
+          interface: input
+      - field: end_char
+        type: integer
+        meta:
+          field: end_char
+          interface: input
+  - collection: llm_run_logs
+    meta:
+      collection: llm_run_logs
+      icon: memory
+      note: 'Logs of LLM runs.'
+      display_template: '{{prompt_name}} - {{llm_model}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: llm_run_logs
+    fields:
+      - field: id
+        type: string
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: user_id
+        type: string
+        meta:
+          field: user_id
+          interface: input
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: prompt_name
+        type: string
+        meta:
+          field: prompt_name
+          interface: input
+      - field: prompt_version
+        type: string
+        meta:
+          field: prompt_version
+          interface: input
+      - field: llm_provider
+        type: string
+        meta:
+          field: llm_provider
+          interface: input
+      - field: llm_model
+        type: string
+        meta:
+          field: llm_model
+          interface: input
+      - field: input_tokens
+        type: integer
+        meta:
+          field: input_tokens
+          interface: input
+      - field: output_tokens
+        type: integer
+        meta:
+          field: output_tokens
+          interface: input
+      - field: cost
+        type: float
+        meta:
+          field: cost
+          interface: input
+      - field: latency_ms
+        type: integer
+        meta:
+          field: latency_ms
+          interface: input
+      - field: request_timestamp
+        type: timestamp
+        meta:
+          field: request_timestamp
+          interface: datetime
+      - field: response_timestamp
+        type: timestamp
+        meta:
+          field: response_timestamp
+          interface: datetime
+      - field: raw_request
+        type: json
+        meta:
+          field: raw_request
+          interface: input-code
+          options:
+            language: json
+      - field: raw_response
+        type: json
+        meta:
+          field: raw_response
+          interface: input-code
+          options:
+            language: json
+      - field: error_message
+        type: text
+        meta:
+          field: error_message
+          interface: textarea
+  - collection: images
+    meta:
+      collection: images
+      icon: image
+      note: 'Images extracted from articles.'
+      display_template: '{{image_path}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: images
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: image_id
+        type: string
+        meta:
+          field: image_id
+          interface: input
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: image_path
+        type: string
+        meta:
+          field: image_path
+          interface: input
+      - field: caption
+        type: text
+        meta:
+          field: caption
+          interface: textarea
+      - field: page_number
+        type: integer
+        meta:
+          field: page_number
+          interface: input
+      - field: coordinates
+        type: json
+        meta:
+          field: coordinates
+          interface: input-code
+          options:
+            language: json
+      - field: classification_confidence
+        type: float
+        meta:
+          field: classification_confidence
+          interface: input
+      - field: is_decorative
+        type: boolean
+        meta:
+          field: is_decorative
+          interface: boolean
+      - field: classification
+        type: string
+        meta:
+          field: classification
+          interface: input
+      - field: extraction_method
+        type: string
+        meta:
+          field: extraction_method
+          interface: input
+      - field: text_block_id
+        type: integer
+        meta:
+          field: text_block_id
+          interface: input
+      - field: caption_block_id
+        type: integer
+        meta:
+          field: caption_block_id
+          interface: input
+      - field: layout_hint
+        type: string
+        meta:
+          field: layout_hint
+          interface: input
+  - collection: tables
+    meta:
+      collection: tables
+      icon: table_chart
+      note: 'Tables extracted from articles.'
+      display_template: 'Table {{table_id}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: tables
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: table_id
+        type: string
+        meta:
+          field: table_id
+          interface: input
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: page_number
+        type: integer
+        meta:
+          field: page_number
+          interface: input
+      - field: coordinates
+        type: json
+        meta:
+          field: coordinates
+          interface: input-code
+          options:
+            language: json
+      - field: table_data
+        type: json
+        meta:
+          field: table_data
+          interface: input-code
+          options:
+            language: json
+      - field: caption
+        type: text
+        meta:
+          field: caption
+          interface: textarea
+      - field: raw_text
+        type: text
+        meta:
+          field: raw_text
+          interface: textarea
+      - field: detection_method
+        type: string
+        meta:
+          field: detection_method
+          interface: input
+      - field: detection_strategy
+        type: string
+        meta:
+          field: detection_strategy
+          interface: input
+      - field: confidence_score
+        type: float
+        meta:
+          field: confidence_score
+          interface: input
+      - field: reading_order
+        type: integer
+        meta:
+          field: reading_order
+          interface: input
+  - collection: pattern_versions
+    meta:
+      collection: pattern_versions
+      icon: history
+      note: 'Versions of patterns.'
+      display_template: '{{pattern_name}} - v{{version}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: pattern_versions
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: pattern_name
+        type: string
+        meta:
+          field: pattern_name
+          interface: input
+      - field: version
+        type: integer
+        meta:
+          field: version
+          interface: input
+      - field: definition
+        type: json
+        meta:
+          field: definition
+          interface: input-code
+          options:
+            language: json
+      - field: created_at
+        type: timestamp
+        meta:
+          field: created_at
+          interface: datetime
+      - field: is_active
+        type: boolean
+        meta:
+          field: is_active
+          interface: boolean
+      - field: priority
+        type: integer
+        meta:
+          field: priority
+          interface: input
+      - field: extraction_method
+        type: string
+        meta:
+          field: extraction_method
+          interface: input
+      - field: semantic_tag
+        type: string
+        meta:
+          field: semantic_tag
+          interface: input
+      - field: pattern_metadata
+        type: json
+        meta:
+          field: pattern_metadata
+          interface: input-code
+          options:
+            language: json
+      - field: target_level
+        type: string
+        meta:
+          field: target_level
+          interface: input
+      - field: name
+        type: string
+        meta:
+          field: name
+          interface: input
+      - field: font_names
+        type: json
+        meta:
+          field: font_names
+          interface: input-code
+          options:
+            language: json
+      - field: min_font_size
+        type: float
+        meta:
+          field: min_font_size
+          interface: input
+      - field: max_font_size
+        type: float
+        meta:
+          field: max_font_size
+          interface: input
+      - field: is_bold
+        type: boolean
+        meta:
+          field: is_bold
+          interface: boolean
+      - field: is_italic
+        type: boolean
+        meta:
+          field: is_italic
+          interface: boolean
+      - field: text_regex
+        type: string
+        meta:
+          field: text_regex
+          interface: input
+      - field: llm_prompt
+        type: text
+        meta:
+          field: llm_prompt
+          interface: textarea
+      - field: content_type
+        type: string
+        meta:
+          field: content_type
+          interface: input
+      - field: action
+        type: string
+        meta:
+          field: action
+          interface: input
+  - collection: text_spans
+    meta:
+      collection: text_spans
+      icon: title
+      note: 'Spans of text with specific formatting.'
+      display_template: '{{text}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: text_spans
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: text_block_id
+        type: integer
+        meta:
+          field: text_block_id
+          interface: input
+      - field: text
+        type: text
+        meta:
+          field: text
+          interface: textarea
+      - field: font
+        type: string
+        meta:
+          field: font
+          interface: input
+      - field: size
+        type: float
+        meta:
+          field: size
+          interface: input
+      - field: is_bold
+        type: boolean
+        meta:
+          field: is_bold
+          interface: boolean
+      - field: is_italic
+        type: boolean
+        meta:
+          field: is_italic
+          interface: boolean
+      - field: is_serif
+        type: boolean
+        meta:
+          field: is_serif
+          interface: boolean
+      - field: is_monospaced
+        type: boolean
+        meta:
+          field: is_monospaced
+          interface: boolean
+      - field: is_superscript
+        type: boolean
+        meta:
+          field: is_superscript
+          interface: boolean
+      - field: is_subscript
+        type: boolean
+        meta:
+          field: is_subscript
+          interface: boolean
+      - field: is_strikethrough
+        type: boolean
+        meta:
+          field: is_strikethrough
+          interface: boolean
+      - field: is_underline
+        type: boolean
+        meta:
+          field: is_underline
+          interface: boolean
+      - field: color
+        type: integer
+        meta:
+          field: color
+          interface: input
+      - field: span_order
+        type: integer
+        meta:
+          field: span_order
+          interface: input
+      - field: bbox
+        type: json
+        meta:
+          field: bbox
+          interface: input-code
+          options:
+            language: json
+  - collection: article_concept_senses
+    meta:
+      collection: article_concept_senses
+      icon: link
+      note: 'Junction table between articles, concepts, and senses.'
+      hidden: true
+      singleton: false
+    schema:
+      schema: public
+      name: article_concept_senses
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: analysis_id
+        type: integer
+        meta:
+          field: analysis_id
+          interface: input
+      - field: concept_id
+        type: integer
+        meta:
+          field: concept_id
+          interface: input
+      - field: sense_id
+        type: integer
+        meta:
+          field: sense_id
+          interface: input
+      - field: concept_name_in_article_nl
+        type: string
+        meta:
+          field: concept_name_in_article_nl
+          interface: input
+      - field: concept_definition_card_in_article_nl
+        type: text
+        meta:
+          field: concept_definition_card_in_article_nl
+          interface: textarea
+      - field: sense_definition_in_article_nl
+        type: text
+        meta:
+          field: sense_definition_in_article_nl
+          interface: textarea
+  - collection: sense_embeddings
+    meta:
+      collection: sense_embeddings
+      icon: data_usage
+      note: 'Embeddings for different senses of concepts.'
+      display_template: 'Embedding {{embedding_id}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: sense_embeddings
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: analysis_id
+        type: integer
+        meta:
+          field: analysis_id
+          interface: input
+      - field: sense_index
+        type: integer
+        meta:
+          field: sense_index
+          interface: input
+      - field: embedding_model
+        type: string
+        meta:
+          field: embedding_model
+          interface: input
+      - field: strategy_id
+        type: integer
+        meta:
+          field: strategy_id
+          interface: input
+      - field: embedding
+        type: json
+        meta:
+          field: embedding
+          interface: input-code
+          options:
+            language: json
+  - collection: sense_clustering_runs
+    meta:
+      collection: sense_clustering_runs
+      icon: bubble_chart
+      note: 'Runs of sense clustering algorithms.'
+      display_template: '{{run_name}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: sense_clustering_runs
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: run_name
+        type: string
+        meta:
+          field: run_name
+          interface: input
+      - field: analysis_id
+        type: integer
+        meta:
+          field: analysis_id
+          interface: input
+      - field: method
+        type: string
+        meta:
+          field: method
+          interface: input
+      - field: parameters
+        type: json
+        meta:
+          field: parameters
+          interface: input-code
+          options:
+            language: json
+      - field: metrics
+        type: json
+        meta:
+          field: metrics
+          interface: input-code
+          options:
+            language: json
+      - field: embedding_model
+        type: string
+        meta:
+          field: embedding_model
+          interface: input
+      - field: strategy_id
+        type: integer
+        meta:
+          field: strategy_id
+          interface: input
+      - field: created_at
+        type: timestamp
+        meta:
+          field: created_at
+          interface: datetime
+  - collection: matched_tags
+    meta:
+      collection: matched_tags
+      icon: tag
+      note: 'Tags matched by patterns.'
+      display_template: '{{semantic_tag}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: matched_tags
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: block_id
+        type: string
+        meta:
+          field: block_id
+          interface: input
+      - field: pattern_version_id
+        type: integer
+        meta:
+          field: pattern_version_id
+          interface: input
+      - field: semantic_tag
+        type: string
+        meta:
+          field: semantic_tag
+          interface: input
+      - field: matched_text
+        type: text
+        meta:
+          field: matched_text
+          interface: textarea
+      - field: bbox
+        type: json
+        meta:
+          field: bbox
+          interface: input-code
+          options:
+            language: json
+      - field: extraction_method
+        type: string
+        meta:
+          field: extraction_method
+          interface: input
+      - field: priority
+        type: integer
+        meta:
+          field: priority
+          interface: input
+      - field: pattern_metadata
+        type: json
+        meta:
+          field: pattern_metadata
+          interface: input-code
+          options:
+            language: json
+      - field: match_span
+        type: json
+        meta:
+          field: match_span
+          interface: input-code
+          options:
+            language: json
+  - collection: pattern_processing_errors
+    meta:
+      collection: pattern_processing_errors
+      icon: error
+      note: 'Errors that occurred during pattern processing.'
+      display_template: '{{error_type}} on {{article_id}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: pattern_processing_errors
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_id
+        type: string
+        meta:
+          field: article_id
+          interface: input
+      - field: pattern_name
+        type: string
+        meta:
+          field: pattern_name
+          interface: input
+      - field: pattern_version_id
+        type: integer
+        meta:
+          field: pattern_version_id
+          interface: input
+      - field: error_message
+        type: text
+        meta:
+          field: error_message
+          interface: textarea
+      - field: error_type
+        type: string
+        meta:
+          field: error_type
+          interface: input
+      - field: stack_trace
+        type: text
+        meta:
+          field: stack_trace
+          interface: textarea
+      - field: created_at
+        type: timestamp
+        meta:
+          field: created_at
+          interface: datetime
+  - collection: evidence_items
+    meta:
+      collection: evidence_items
+      icon: fact_check
+      note: 'Evidence items supporting concept senses.'
+      display_template: '{{text_extract_nl}}'
+      hidden: false
+      singleton: false
+    schema:
+      schema: public
+      name: evidence_items
+    fields:
+      - field: id
+        type: integer
+        meta:
+          field: id
+          special:
+            - uuid
+          interface: input
+          readonly: true
+          hidden: true
+      - field: article_concept_sense_id
+        type: integer
+        meta:
+          field: article_concept_sense_id
+          interface: input
+      - field: segment_db_id
+        type: integer
+        meta:
+          field: segment_db_id
+          interface: input
+      - field: text_extract_nl
+        type: text
+        meta:
+          field: text_extract_nl
+          interface: textarea
+      - field: start_char_in_segment
+        type: integer
+        meta:
+          field: start_char_in_segment
+          interface: input
+      - field: end_char_in_segment
+        type: integer
+        meta:
+          field: end_char_in_segment
+          interface: input

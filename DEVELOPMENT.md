@@ -11,7 +11,7 @@
 
 2. **Start Development Environment**
    ```bash
-   cd schema-tool
+   cd scripts
    npm run dev:start
    ```
 
@@ -103,6 +103,20 @@ npm run schema:validate
 - ✅ Simple to understand and debug
 - ✅ Git history = complete audit trail
 
+### Schema Management: A Hybrid Approach
+
+Due to a persistent bug in the Directus CLI's `schema apply` command, this project uses a hybrid approach to schema management:
+
+1.  **Generating the Schema (Official CLI)**:
+    -   To ensure the schema file is always in the correct format, we use the official CLI to take a snapshot of the schema.
+    -   `npx directus schema snapshot ../schema/schema_pipeline.yml`
+
+2.  **Applying the Schema (Custom Script)**:
+    -   To apply the schema, we use the reliable, API-driven `apply_schema.js` script. This bypasses the CLI bug and ensures the schema is applied correctly.
+    -   `npm run schema:apply`
+
+This approach gives us the best of both worlds: a correctly formatted schema file and a reliable method for applying it.
+
 ## Architecture
 
 ### Services
@@ -112,7 +126,7 @@ npm run schema:validate
 ### Data Persistence
 - **PostgreSQL Data**: Docker volume `directus_db`
 - **File Uploads**: Local directory `./uploads`
-- **Schema**: Version controlled in `schema-tool/`
+- **Schema**: Version controlled in `schema/`
 
 ### Environment Configuration
 - **`.env.local`**: Your actual development settings (not tracked in git)
