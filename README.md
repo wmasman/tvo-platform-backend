@@ -2,6 +2,29 @@
 
 Professional headless CMS using Directus with development workflow optimized for solo developers and small teams.
 
+## 🔗 Backend Integration
+
+This Directus instance is integrated with the **TVO Backend** Python processing pipeline for article storage and management via a dedicated API Agent user.
+
+**Integration Status**: ✅ **PRODUCTION READY**
+- Full CRUD operations tested and working
+- Dedicated API Agent user with proper permissions
+- Comprehensive documentation and troubleshooting guides
+
+### Quick Integration Test
+
+```bash
+# Test the integration from tvoo_backend directory
+cd ../tvoo_backend
+PYTHONPATH=. python scripts/utilities/test_directus_service.py
+```
+
+### Integration Documentation
+
+- **Setup Guide**: `documentation/backend-integration-setup-guide.md`
+- **Troubleshooting**: `documentation/troubleshooting-guide.md`
+- **Architecture Overview**: `../docs/architecture/directus-backend-integration-proof-of-concept.md`
+
 ## Quick Start
 
 1. **Setup Environment**
